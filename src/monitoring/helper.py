@@ -52,10 +52,7 @@ def cli_script() -> None:
     print("=" * 65 + "\n")
 
     print(Fore.WHITE + Style.BRIGHT + "OVERVIEW:" + Style.RESET_ALL)
-    print(
-        "  Continuously monitors host network activity and system\n"
-        "  resources.\n"
-    )
+    print("  Continuously monitors host network activity and system\n  resources.\n")
 
     print("=" * 65)
 
