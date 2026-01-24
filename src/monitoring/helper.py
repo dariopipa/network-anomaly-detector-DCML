@@ -60,7 +60,7 @@ def cli_script() -> None:
     print(
         Fore.WHITE
         + Style.BRIGHT
-        + f"Detected OS: "
+        + "Detected OS: "
         + Style.RESET_ALL
         + Fore.GREEN
         + f"{detected_os}"

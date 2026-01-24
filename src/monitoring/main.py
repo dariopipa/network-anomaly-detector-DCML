@@ -5,7 +5,6 @@ from monitor import (
     get_network_io_data,
     get_cpu_and_memory_information,
     calculate_network_io_byte_difference,
-    get_processes_names_and_id,
 )
 import logging
 import helper
