@@ -34,7 +34,7 @@ def main():
     communicate_client = CommunicateClient(MONITOR_IP, COMMUNICATION_PORT)
 
     while True:
-        #todo: UPDATE THE RANDOMNESS BEFORE ATTACK ()
+        # todo: UPDATE THE RANDOMNESS BEFORE ATTACK ()
         wait_before_attack = random.randint(1, 5)
 
         print(Fore.CYAN + "Injection started" + Style.RESET_ALL)

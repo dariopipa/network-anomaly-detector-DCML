@@ -52,10 +52,7 @@ def cli_script() -> None:
     print("=" * 65 + "\n")
 
     print(Fore.WHITE + Style.BRIGHT + "OVERVIEW:" + Style.RESET_ALL)
-    print(
-        "  Continuously monitors host network activity and system\n"
-        "  resources.\n"
-    )
+    print("  Continuously monitors host network activity and system\n  resources.\n")
 
     print("=" * 65)
 
@@ -63,7 +60,7 @@ def cli_script() -> None:
     print(
         Fore.WHITE
         + Style.BRIGHT
-        + f"Detected OS: "
+        + "Detected OS: "
         + Style.RESET_ALL
         + Fore.GREEN
         + f"{detected_os}"
