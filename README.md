@@ -1,12 +1,45 @@
 ## Setup
 
-Install dependencies using **uv**:
+### Using uv (recommended)
+
+With **uv**, the virtual environment is created automatically:
 
 ```bash
 uv sync
 ```
 
-Or using **pip**:
+No need to manually create or activate the venv `uv sync` does this automatically.
+
+### Using pip
+
+If using **pip**, you need to create and activate a virtual environment first:
+
+**1. Create the virtual environment:**
+
+```bash
+python -m venv venv
+```
+
+**2. Activate the virtual environment:**
+
+- **Windows (Command Prompt):**
+
+  ```bash
+  venv\Scripts\activate
+  ```
+
+- **Windows (PowerShell):**
+
+  ```bash
+  venv\Scripts\Activate.ps1
+  ```
+
+- **Linux/macOS:**
+  ```bash
+  source venv/bin/activate
+  ```
+
+**3. Install dependencies:**
 
 ```bash
 pip install -r requirements.txt
