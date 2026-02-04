@@ -35,14 +35,14 @@ def main():
     communicate_client = CommunicateClient(MONITOR_IP, COMMUNICATION_PORT)
 
     attack_deck = []
-    
+
     while True:
         if not attack_deck:
-            attack_deck = attacks.copy()  
+            attack_deck = attacks.copy()
             random.shuffle(attack_deck)
-        
+
         attack_func = attack_deck.pop(0)
-        
+
         # todo: UPDATE THE RANDOMNESS BEFORE ATTACK ()
         wait_before_attack = random.randint(30, 120)
 
