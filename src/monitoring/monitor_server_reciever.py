@@ -33,10 +33,11 @@ class ControlHandler(socketserver.BaseRequestHandler):
 
             elif data == "STOP":
                 label = 0
+                attack_type = ""
                 print(
                     Fore.GREEN
                     + Style.BRIGHT
-                    + f"[LABEL] Received STOP → label = {label}"
+                    + f"[LABEL] Received STOP → label = {label} , attack={attack_type}"
                     + Style.RESET_ALL
                 )
 

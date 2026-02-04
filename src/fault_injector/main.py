@@ -28,20 +28,28 @@ def main():
         fault_injector.tcp_connection_flood,
         fault_injector.tcp_bandwidth_exhaustion,
         fault_injector.port_scan_simulation,
+        fault_injector.bulk_download,
         udp_injector.udp_flood,
     ]
 
     communicate_client = CommunicateClient(MONITOR_IP, COMMUNICATION_PORT)
 
+    attack_deck = []
+    
     while True:
+        if not attack_deck:
+            attack_deck = attacks.copy()  
+            random.shuffle(attack_deck)
+        
+        attack_func = attack_deck.pop(0)
+        
         # todo: UPDATE THE RANDOMNESS BEFORE ATTACK ()
-        wait_before_attack = random.randint(200, 2000)
+        wait_before_attack = random.randint(30, 120)
 
         print(Fore.CYAN + "Injection started" + Style.RESET_ALL)
         print(Fore.CYAN + f"Time before attack {wait_before_attack}" + Style.RESET_ALL)
         time.sleep(wait_before_attack)
 
-        attack_func = random.choice(attacks)
         print(
             Fore.YELLOW
             + Style.BRIGHT
