@@ -40,7 +40,7 @@ def main():
             current_network_io_data = get_network_io_data()
             cpu_memory_usage = get_cpu_and_memory_information()
             network_data_diff = calculate_network_io_byte_difference(
-                previous_network_io, get_network_io_data()
+                previous_network_io, current_network_io_data
             )
             previous_network_io = current_network_io_data
             network_connection_info = get_network_connection_data()

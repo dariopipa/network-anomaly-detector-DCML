@@ -34,7 +34,8 @@ class NetworkConnectionData:
 
 
 # Based on the documentation the cpu usage detector
-# should be run once before, since the first run it will output 0 and that is incorrect.
+# should be run once before,
+# since the first run it will output 0 and that is incorrect.
 def run_baseline_cpu_usage_detector() -> None:
     psutil.cpu_percent(interval=None)
     sleep(0.1)

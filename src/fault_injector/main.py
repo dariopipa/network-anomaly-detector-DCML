@@ -35,7 +35,7 @@ def main():
 
     while True:
         # todo: UPDATE THE RANDOMNESS BEFORE ATTACK ()
-        wait_before_attack = random.randint(1, 5)
+        wait_before_attack = random.randint(200, 2000)
 
         print(Fore.CYAN + "Injection started" + Style.RESET_ALL)
         print(Fore.CYAN + f"Time before attack {wait_before_attack}" + Style.RESET_ALL)
