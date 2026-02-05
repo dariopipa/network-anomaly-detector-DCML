@@ -7,7 +7,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 from server_config import COMMUNICATION_PORT
 
 label = 0
-attack_type = ""
+attack_type = "normal"
 
 
 class ControlHandler(socketserver.BaseRequestHandler):
@@ -33,7 +33,7 @@ class ControlHandler(socketserver.BaseRequestHandler):
 
             elif data == "STOP":
                 label = 0
-                attack_type = ""
+                attack_type = "normal"
                 print(
                     Fore.GREEN
                     + Style.BRIGHT
