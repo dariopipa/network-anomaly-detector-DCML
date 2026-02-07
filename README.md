@@ -8,7 +8,7 @@ With **uv**, the virtual environment is created automatically:
 uv sync
 ```
 
-No need to manually create or activate the venv `uv sync` does this automatically.
+No need to manually create or activate the venv — `uv sync` does this automatically.
 
 ### Using pip
 
