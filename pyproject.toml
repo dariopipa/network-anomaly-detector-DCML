@@ -14,5 +14,4 @@ dependencies = [
     "matplotlib>=3.10.8",
     "seaborn>=0.13.2",
     "ipympl>=0.10.0",
-    "tensorflow>=2.20.0",
 ]

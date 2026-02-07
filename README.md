@@ -49,34 +49,30 @@ pip install -r requirements.txt
 
 ## How to Run
 
-Open **4 terminals** and run the following commands **in order**.
+Open **4 terminals** and run the following commands **in order** from the project root.
 
 ### Terminal 1 — TCP Server
 
 ```bash
-cd src/servers
-python tcp_server.py
+python -m src.servers.tcp_server
 ```
 
 ### Terminal 2 — UDP Server
 
 ```bash
-cd src/servers
-python udp_server.py
+python -m src.servers.udp_server
 ```
 
 ### Terminal 3 — Monitor (collects data)
 
 ```bash
-cd src/monitoring
-python main.py
+python -m src.monitoring.main
 ```
 
 ### Terminal 4 — Fault Injector (runs attacks)
 
 ```bash
-cd src/fault_injector
-python main.py
+python -m src.fault_injector.main
 ```
 
 ## Configuration

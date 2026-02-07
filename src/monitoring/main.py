@@ -1,15 +1,15 @@
 import threading
 from pathlib import Path
-from monitor import (
+from src.monitoring.monitor import (
     get_network_connection_data,
     get_network_io_data,
     get_cpu_and_memory_information,
     calculate_network_io_byte_difference,
 )
 import logging
-import helper
+from src.monitoring import helper
 import time
-import monitor_server_reciever
+from src.monitoring import monitor_server_reciever
 
 SRC_DIR = Path(__file__).parent.parent
 
@@ -71,7 +71,7 @@ def main():
             time.sleep(1)
         except KeyboardInterrupt:
             print("Data collection stopped.")
-            exit(1)
+            exit(0)
 
 
 if __name__ == "__main__":

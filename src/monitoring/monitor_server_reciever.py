@@ -1,10 +1,7 @@
 import socketserver
-import sys
-from pathlib import Path
 from colorama import Fore, Style
 
-sys.path.append(str(Path(__file__).parent.parent))
-from server_config import COMMUNICATION_PORT
+from src.server_config import COMMUNICATION_PORT
 
 label = 0
 attack_type = "normal"

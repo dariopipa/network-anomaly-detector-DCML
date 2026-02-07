@@ -1,10 +1,6 @@
 import socketserver
-import sys
-from pathlib import Path
 
-sys.path.append(str(Path(__file__).parent.parent))
-
-from server_config import TCP_PORT
+from src.server_config import TCP_PORT
 
 # https://realpython.com/python-sockets/#tcp-sockets
 # https://docs.python.org/3/library/socketserver.html#socketserver.ThreadingTCPServer
