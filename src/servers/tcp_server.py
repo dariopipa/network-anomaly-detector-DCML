@@ -1,5 +1,4 @@
 import socketserver
-
 from src.server_config import TCP_PORT
 
 # https://realpython.com/python-sockets/#tcp-sockets

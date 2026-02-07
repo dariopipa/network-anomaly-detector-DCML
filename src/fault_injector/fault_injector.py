@@ -2,13 +2,13 @@ import socket
 import time
 import random
 
-"""
-Fault Injector class will be used to create different types of injection 
-in the network for both TCP and UDP connections.
-"""
-
 
 class FaultInjector:
+    """
+    Fault Injector class will be used to create different types of injection
+    in the network for both TCP and UDP connections.
+    """
+
     def __init__(self, host: str, port: int):
         self.host = host
         self.port = port

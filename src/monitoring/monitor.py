@@ -1,7 +1,7 @@
 import logging
 import socket
 import psutil
-from src.monitoring.helper import CPUMemoryInfo, DataIOCounter, NetworkConnectionData
+from src.monitoring.models import CPUMemoryInfo, DataIOCounter, NetworkConnectionData
 
 TCP_STATES = {
     "ESTABLISHED",

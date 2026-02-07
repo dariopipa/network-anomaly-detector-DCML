@@ -1,12 +1,12 @@
 import socketserver
 from colorama import Fore, Style
-
 from src.server_config import COMMUNICATION_PORT
 
 label = 0
 attack_type = "normal"
 
 
+# ControlHandler is the listener that will write global variables like label and attack type so the monitoring script labels the data correctly.
 class ControlHandler(socketserver.BaseRequestHandler):
     def handle(self):
         global label
