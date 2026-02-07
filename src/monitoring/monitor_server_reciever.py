@@ -1,15 +1,12 @@
 import socketserver
-import sys
-from pathlib import Path
 from colorama import Fore, Style
-
-sys.path.append(str(Path(__file__).parent.parent))
-from server_config import COMMUNICATION_PORT
+from src.server_config import COMMUNICATION_PORT
 
 label = 0
-attack_type = ""
+attack_type = "normal"
 
 
+# ControlHandler is the listener that will write global variables like label and attack type so the monitoring script labels the data correctly.
 class ControlHandler(socketserver.BaseRequestHandler):
     def handle(self):
         global label
@@ -33,10 +30,11 @@ class ControlHandler(socketserver.BaseRequestHandler):
 
             elif data == "STOP":
                 label = 0
+                attack_type = "normal"
                 print(
                     Fore.GREEN
                     + Style.BRIGHT
-                    + f"[LABEL] Received STOP → label = {label}"
+                    + f"[LABEL] Received STOP → label = {label} , attack={attack_type}"
                     + Style.RESET_ALL
                 )
 

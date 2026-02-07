@@ -1,12 +1,45 @@
 ## Setup
 
-Install dependencies using **uv**:
+### Using uv (recommended)
+
+With **uv**, the virtual environment is created automatically:
 
 ```bash
 uv sync
 ```
 
-Or using **pip**:
+No need to manually create or activate the venv — `uv sync` does this automatically.
+
+### Using pip
+
+If using **pip**, you need to create and activate a virtual environment first:
+
+**1. Create the virtual environment:**
+
+```bash
+python -m venv venv
+```
+
+**2. Activate the virtual environment:**
+
+- **Windows (Command Prompt):**
+
+  ```bash
+  venv\Scripts\activate
+  ```
+
+- **Windows (PowerShell):**
+
+  ```bash
+  venv\Scripts\Activate.ps1
+  ```
+
+- **Linux/macOS:**
+  ```bash
+  source venv/bin/activate
+  ```
+
+**3. Install dependencies:**
 
 ```bash
 pip install -r requirements.txt
@@ -16,34 +49,30 @@ pip install -r requirements.txt
 
 ## How to Run
 
-Open **4 terminals** and run the following commands **in order**.
+Open **4 terminals** and run the following commands **in order** from the project root.
 
 ### Terminal 1 — TCP Server
 
 ```bash
-cd src/servers
-python tcp_server.py
+python -m src.servers.tcp_server
 ```
 
 ### Terminal 2 — UDP Server
 
 ```bash
-cd src/servers
-python udp_server.py
+python -m src.servers.udp_server
 ```
 
 ### Terminal 3 — Monitor (collects data)
 
 ```bash
-cd src/monitoring
-python main.py
+python -m src.monitoring.main
 ```
 
 ### Terminal 4 — Fault Injector (runs attacks)
 
 ```bash
-cd src/fault_injector
-python main.py
+python -m src.fault_injector.main
 ```
 
 ## Configuration

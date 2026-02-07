@@ -1,6 +1,7 @@
 import socket
 
 
+# The class will be used to be able to communicate between the host machine and the fault injecting machine, when an attack is ongoing or not, to be able to LABEL the data that is being collected.
 class CommunicateClient:
     def __init__(self, host, port):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
