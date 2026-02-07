@@ -80,10 +80,11 @@ def write_to_csv(filename: str, data: dict):
         writer.writerow(data)
 
 
-def collect_monitored_data(label: int = 0, attack_type: str = "normal") -> dict:
-
-    run_baseline_cpu_usage_detector()
-    previous_network_io = monitor.get_network_io_data()
+def collect_monitored_data(
+    previous_network_io: DataIOCounter | None,
+    label: int = 0,
+    attack_type: str = "normal",
+) -> tuple[dict, DataIOCounter]:
 
     current_network_io_data = get_network_io_data()
     cpu_memory_usage = get_cpu_and_memory_information()
@@ -113,4 +114,4 @@ def collect_monitored_data(label: int = 0, attack_type: str = "normal") -> dict:
         "attack_type": attack_type,
     }
 
-    return data
+    return data, current_network_io_data

@@ -30,14 +30,20 @@ def main():
     server_thread.start()
 
     helper.cli_script()
-
+    helper.run_baseline_cpu_usage_detector()
+    previous_network_io = None
+    
     print("Data Collection started. Press Ctrl+C to stop.")
     while True:
         try:
-            helper.collect_monitored_data(
+
+            data, previous_network_io = helper.collect_monitored_data(
+                previous_network_io=previous_network_io,
                 label=monitor_server_reciever.label,
                 attack_type=monitor_server_reciever.attack_type,
             )
+
+            helper.write_to_csv(filename=str(DATASET_PATH), data=data)
 
             for proc in psutil.process_iter(["pid", "name", "username"]):
                 helper.write_to_csv(filename=str(RUNNING_PROC_PATH), data=proc.info)
