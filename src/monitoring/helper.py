@@ -80,7 +80,7 @@ def write_to_csv(filename: str, data: dict):
         writer.writerow(data)
 
 
-def collect_monitored_data(label: int = 0, attack_type: str = "normal") -> tuple[dict]:
+def collect_monitored_data(label: int = 0, attack_type: str = "normal") -> dict:
 
     run_baseline_cpu_usage_detector()
     previous_network_io = monitor.get_network_io_data()
