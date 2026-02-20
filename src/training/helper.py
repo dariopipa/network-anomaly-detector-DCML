@@ -1,11 +1,10 @@
 import pandas as pd
+import math
 
-RESAMPLE_TIME_INTERVAL = "20s"
 
-
-def aggregate_dataframe_into_20_seconds_interval(data):
+def aggregate_dataframe_into_seconds_interval(data, window_size_seconds):
     """
-    This function will take the data in 1s intervals and aggregate it into 20-second intervals, while also doing some aggregation on the data, like finding the min, max, mean, and std, which will create the necessary features for the model to be trained on. This is in the monitoring helper because notebooks cannot import from each other.
+    This function will take the data in 1s intervals and aggregate it into windows as intervals, while also doing some aggregation on the data, like finding the min, max, mean, and std, which will create the necessary features for the model to be trained on. This is in the monitoring helper because notebooks cannot import from each other.
     """
 
     data["datetime"] = pd.to_datetime(data["time"])
@@ -35,7 +34,7 @@ def aggregate_dataframe_into_20_seconds_interval(data):
 
     resampled_data = (
         data[state_cols + traffic_cols + ["label"]]
-        .resample(RESAMPLE_TIME_INTERVAL)
+        .resample(window_size_seconds)
         .agg(agg_rules)
     )
 
@@ -43,10 +42,13 @@ def aggregate_dataframe_into_20_seconds_interval(data):
         "_".join(col).strip() for col in resampled_data.columns.values
     ]
 
-    attack_seconds = data["label"].resample(RESAMPLE_TIME_INTERVAL).sum()
-    resampled_data["label"] = (attack_seconds >= 8).astype(int)
+    attack_seconds = data["label"].resample(window_size_seconds).sum()
 
-    # When using resample, the function creates 20-second windows from the first timestamp to the last, even if no data was collected during some of those intervals. We then drop the windows that contain only null values.
+    # if 40% of a window is labeled as "attacked" the whole new window will be labeled "attacked"
+    min_attack_seconds = math.ceil(0.4 * window_size_seconds)
+    resampled_data["label"] = (attack_seconds >= min_attack_seconds).astype(int)
+
+    # When using resample, the function creates {seconds_to_aggregate} windows from the first timestamp to the last, even if no data was collected during some of those intervals. We then drop the windows that contain only null values.
     resampled_data = resampled_data.dropna()
 
     return resampled_data
