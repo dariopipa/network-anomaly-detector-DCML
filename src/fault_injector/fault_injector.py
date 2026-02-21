@@ -83,7 +83,7 @@ class FaultInjector:
     # Large file download
     def bulk_download(self):
         duration = random.randint(30, 90)
-        data = random.randbytes(1048576000)
+        data = random.randbytes(10485760)
         start_time = time.time()
 
         while time.time() - start_time < duration:

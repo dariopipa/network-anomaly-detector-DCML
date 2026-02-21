@@ -27,7 +27,15 @@ def main():
         udp_injector.udp_flood,
     ]
 
-    communicate_client = CommunicateClient(MONITOR_IP, COMMUNICATION_PORT)
+    try:
+        communicate_client = CommunicateClient(MONITOR_IP, COMMUNICATION_PORT)
+    except ConnectionRefusedError:
+        print(
+            Fore.RED
+            + "[Error] The monitoring script is not online on the secondary machine"
+            + Style.RESET_ALL
+        )
+        exit(1)
 
     attack_deck = []
 
