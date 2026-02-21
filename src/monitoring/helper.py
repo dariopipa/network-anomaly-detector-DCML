@@ -5,7 +5,6 @@ from time import sleep
 import time
 from colorama import Fore, Style
 import psutil
-from . import monitor
 from .models import DataIOCounter
 from .monitor import (
     calculate_network_io_byte_difference,

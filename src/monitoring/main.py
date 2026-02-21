@@ -11,9 +11,7 @@ SRC_DIR = Path(__file__).parent.parent
 
 # TODO: UPDATE NAME AFTER CREATING THE DATASET TO NOT ACTUALLY APPEND INFO BY MISTAKE
 DATASET_PATH = SRC_DIR / "dataset.csv"
-RUNNING_PROC_PATH = (
-    SRC_DIR / "processes.csv"
-)  # this will be used to clarify what a normal Network will look like for this dataset
+RUNNING_PROC_PATH = SRC_DIR / "processes.csv"
 
 
 logging.basicConfig(
@@ -32,11 +30,10 @@ def main():
     helper.cli_script()
     helper.run_baseline_cpu_usage_detector()
     previous_network_io = None
-    
+
     print("Data Collection started. Press Ctrl+C to stop.")
     while True:
         try:
-
             data, previous_network_io = helper.collect_monitored_data(
                 previous_network_io=previous_network_io,
                 label=monitor_server_reciever.label,
