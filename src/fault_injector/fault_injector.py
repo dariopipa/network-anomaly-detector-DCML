@@ -26,7 +26,7 @@ class FaultInjector:
                     sock.connect((self.host, self.port))
                     connections += 1
                     time.sleep(random.uniform(0.01, 0.05))
-            except:
+            except Exception as e:
                 time.sleep(0.1)
 
     # Bandwidth Exhaustion
@@ -43,7 +43,7 @@ class FaultInjector:
                     for _ in range(random.randint(5, 15)):
                         sock.sendall(data)
                         time.sleep(random.uniform(0.01, 0.05))
-            except:
+            except Exception as e:
                 time.sleep(0.1)
 
     # UDP Flood
@@ -57,7 +57,7 @@ class FaultInjector:
                 try:
                     sock.sendto(data, (self.host, self.port))
                     time.sleep(random.uniform(0.001, 0.01))
-                except:
+                except Exception as e:
                     time.sleep(0.1)
 
     # Port Scanning Attack
@@ -75,7 +75,7 @@ class FaultInjector:
                 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                     sock.settimeout(0.1)
                     sock.connect((self.host, port))
-            except:
+            except Exception as e:
                 pass
 
             time.sleep(random.uniform(0.01, 0.05))
@@ -95,5 +95,5 @@ class FaultInjector:
                     while time.time() - start_time < duration:
                         sock.sendall(data)
                         time.sleep(random.uniform(0.01, 0.05))
-            except:
+            except Exception as e:
                 time.sleep(0.1)

@@ -15,7 +15,16 @@ class TCPHandler(socketserver.BaseRequestHandler):
 
 
 if __name__ == "__main__":
-    with socketserver.ThreadingTCPServer(("0.0.0.0", TCP_PORT), TCPHandler) as server:
-        server.allow_reuse_address = True
-        print(f"TCP Server listening on 0.0.0.0:{TCP_PORT}")
-        server.serve_forever()
+    try:
+        with socketserver.ThreadingTCPServer(
+            ("0.0.0.0", TCP_PORT), TCPHandler
+        ) as server:
+            server.allow_reuse_address = True
+            print(f"TCP Server listening on 0.0.0.0:{TCP_PORT}")
+            server.serve_forever()
+    except KeyboardInterrupt:
+        print("Script stopped")
+        exit(0)
+    except Exception as e:
+        print(f"Error: {e}")
+        exit(1)
