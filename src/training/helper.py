@@ -2,13 +2,14 @@ import pandas as pd
 import math
 
 
-def aggregate_dataframe_into_seconds_interval(data, window_size_seconds):
+def aggregate_dataframe_into_seconds_interval(data, window_size):
     """
     This function will take the data in 1s intervals and aggregate it into windows as intervals, while also doing some aggregation on the data, like finding the min, max, mean, and std, which will create the necessary features for the model to be trained on. This is in the monitoring helper because notebooks cannot import from each other.
     """
 
     data["datetime"] = pd.to_datetime(data["time"])
     data = data.set_index("datetime")
+    window_size_seconds = f"{window_size}s"
 
     # Define column groups for different aggregation strategies
     state_cols = [
@@ -45,7 +46,7 @@ def aggregate_dataframe_into_seconds_interval(data, window_size_seconds):
     attack_seconds = data["label"].resample(window_size_seconds).sum()
 
     # if 40% of a window is labeled as "attacked" the whole new window will be labeled "attacked"
-    min_attack_seconds = math.ceil(0.4 * window_size_seconds)
+    min_attack_seconds = math.ceil(0.4 * window_size)
     resampled_data["label"] = (attack_seconds >= min_attack_seconds).astype(int)
 
     # When using resample, the function creates {seconds_to_aggregate} windows from the first timestamp to the last, even if no data was collected during some of those intervals. We then drop the windows that contain only null values.
