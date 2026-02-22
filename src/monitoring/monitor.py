@@ -33,7 +33,7 @@ def get_network_connection_data() -> NetworkConnectionData:
     state_counts = {s: 0 for s in TCP_STATES}
 
     remote_ips = set()
-    remote_ports = set()
+    local_ports = set()
 
     try:
         for connection in psutil.net_connections(kind="inet"):
@@ -46,9 +46,10 @@ def get_network_connection_data() -> NetworkConnectionData:
             elif connection.type == socket.SOCK_DGRAM:
                 total_udp_conn += 1
 
+            if connection.laddr:
+                local_ports.add(connection.laddr.port)
             if connection.raddr:
                 remote_ips.add(connection.raddr.ip)
-                remote_ports.add(connection.raddr.port)
 
         return NetworkConnectionData(
             tcp_connections_total=total_tcp_conn,
@@ -58,7 +59,7 @@ def get_network_connection_data() -> NetworkConnectionData:
             tcp_time_wait=state_counts["TIME_WAIT"],
             tcp_close_wait=state_counts["CLOSE_WAIT"],
             unique_remote_ips=len(remote_ips),
-            unique_remote_ports=len(remote_ports),
+            unique_local_ports=len(local_ports),
         )
 
     except PermissionError:
