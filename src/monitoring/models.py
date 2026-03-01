@@ -24,4 +24,4 @@ class NetworkConnectionData:
     tcp_time_wait: int
     tcp_close_wait: int
     unique_remote_ips: int
-    unique_remote_ports: int
+    unique_local_ports: int
