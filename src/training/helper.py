@@ -22,7 +22,7 @@ def aggregate_dataframe_into_seconds_interval(data, window_size):
         "tcp_time_wait",
         "tcp_close_wait",
         "unique_remote_ips",
-        "unique_remote_ports",
+        "unique_local_ports",
     ]
 
     traffic_cols = ["bytes_recv", "bytes_sent", "packets_recv", "packets_sent"]

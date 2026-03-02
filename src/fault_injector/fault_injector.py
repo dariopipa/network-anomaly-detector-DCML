@@ -22,7 +22,7 @@ class FaultInjector:
         while time.time() - start_time < duration:
             try:
                 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-                    sock.settimeout(2)
+                    sock.bind(("", random.randint(10000, 60000)))
                     sock.connect((self.host, self.port))
                     connections += 1
                     time.sleep(random.uniform(0.01, 0.05))
@@ -49,14 +49,13 @@ class FaultInjector:
     # UDP Flood
     def udp_flood(self):
         duration = random.randint(30, 90)
-        data = random.randbytes(512)
+        data = random.randbytes(65507)
         start_time = time.time()
 
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
             while time.time() - start_time < duration:
                 try:
                     sock.sendto(data, (self.host, self.port))
-                    time.sleep(random.uniform(0.001, 0.01))
                 except Exception as e:
                     time.sleep(0.1)
 
@@ -64,8 +63,7 @@ class FaultInjector:
     def port_scan_simulation(self):
         duration = random.randint(30, 90)
         start_time = time.time()
-        scan_ports = list(range(1, 65536))
-        random.shuffle(scan_ports)
+        scan_ports = random.sample(range(1, 65536), 500)
 
         for port in scan_ports:
             if time.time() - start_time >= duration:
@@ -73,7 +71,6 @@ class FaultInjector:
 
             try:
                 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-                    sock.settimeout(0.1)
                     sock.connect((self.host, port))
             except Exception as e:
                 pass
