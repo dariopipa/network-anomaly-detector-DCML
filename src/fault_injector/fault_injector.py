@@ -75,8 +75,6 @@ class FaultInjector:
             except Exception as e:
                 pass
 
-            time.sleep(random.uniform(0.01, 0.05))
-
     # Large file download
     def bulk_download(self):
         duration = random.randint(30, 90)
