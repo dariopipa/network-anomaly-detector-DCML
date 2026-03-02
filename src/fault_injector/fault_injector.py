@@ -1,4 +1,5 @@
 import socket
+import threading
 import time
 import random
 
@@ -22,29 +23,33 @@ class FaultInjector:
         while time.time() - start_time < duration:
             try:
                 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-                    sock.bind(("", random.randint(10000, 60000)))
+                    sock.settimeout(2)
                     sock.connect((self.host, self.port))
-                    connections += 1
                     time.sleep(random.uniform(0.01, 0.05))
+                    connections += 1
             except Exception as e:
                 time.sleep(0.1)
 
     # Bandwidth Exhaustion
     def tcp_bandwidth_exhaustion(self) -> None:
         duration = random.randint(30, 90)
-        data = random.randbytes(10485760)  # 10 mb of data
         start_time = time.time()
+        data = random.randbytes(10485760)  # 10MB
 
-        while time.time() - start_time < duration:
-            try:
-                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-                    sock.settimeout(2)
-                    sock.connect((self.host, self.port))
-                    for _ in range(random.randint(5, 15)):
+        def send_data():
+            while time.time() - start_time < duration:
+                try:
+                    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+                        sock.connect((self.host, self.port))
                         sock.sendall(data)
-                        time.sleep(random.uniform(0.01, 0.05))
-            except Exception as e:
-                time.sleep(0.1)
+                except Exception:
+                    time.sleep(0.1)
+
+        threads = [threading.Thread(target=send_data) for _ in range(10)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
 
     # UDP Flood
     def udp_flood(self):
@@ -63,7 +68,7 @@ class FaultInjector:
     def port_scan_simulation(self):
         duration = random.randint(30, 90)
         start_time = time.time()
-        scan_ports = random.sample(range(1, 65536), 500)
+        scan_ports = random.sample(range(1, 65536), 2000)
 
         for port in scan_ports:
             if time.time() - start_time >= duration:
@@ -71,6 +76,7 @@ class FaultInjector:
 
             try:
                 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+                    sock.settimeout(0.05)
                     sock.connect((self.host, port))
             except Exception as e:
                 pass

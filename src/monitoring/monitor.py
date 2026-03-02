@@ -34,6 +34,7 @@ def get_network_connection_data() -> NetworkConnectionData:
 
     remote_ips = set()
     local_ports = set()
+    remote_ports = set()
 
     try:
         for connection in psutil.net_connections(kind="inet"):
@@ -50,6 +51,7 @@ def get_network_connection_data() -> NetworkConnectionData:
                 local_ports.add(connection.laddr.port)
             if connection.raddr:
                 remote_ips.add(connection.raddr.ip)
+                remote_ports.add(connection.raddr.port)
 
         return NetworkConnectionData(
             tcp_connections_total=total_tcp_conn,
@@ -60,6 +62,7 @@ def get_network_connection_data() -> NetworkConnectionData:
             tcp_close_wait=state_counts["CLOSE_WAIT"],
             unique_remote_ips=len(remote_ips),
             unique_local_ports=len(local_ports),
+            unique_remote_ports=len(remote_ports),
         )
 
     except PermissionError:

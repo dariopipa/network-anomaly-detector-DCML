@@ -25,3 +25,4 @@ class NetworkConnectionData:
     tcp_close_wait: int
     unique_remote_ips: int
     unique_local_ports: int
+    unique_remote_ports: int

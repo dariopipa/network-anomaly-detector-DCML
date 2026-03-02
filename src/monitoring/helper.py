@@ -103,6 +103,7 @@ def collect_monitored_data(
         "tcp_close_wait": network_connection_info.tcp_close_wait,
         "unique_remote_ips": network_connection_info.unique_remote_ips,
         "unique_local_ports": network_connection_info.unique_local_ports,
+        "unique_remote_ports": network_connection_info.unique_remote_ports,
         "bytes_recv": network_data_diff.bytes_recv,
         "bytes_sent": network_data_diff.bytes_sent,
         "packets_recv": network_data_diff.packets_recv,
