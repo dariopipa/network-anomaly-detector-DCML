@@ -42,7 +42,12 @@ def main():
 
             helper.write_to_csv(filename=str(DATASET_PATH), data=data)
 
-            for proc in psutil.process_iter(["pid", "name", "username"]):
+            for proc in psutil.process_iter(
+                [
+                    "pid",
+                    "name",
+                ]
+            ):
                 helper.write_to_csv(filename=str(RUNNING_PROC_PATH), data=proc.info)
 
             time.sleep(1)

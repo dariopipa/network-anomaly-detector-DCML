@@ -29,13 +29,14 @@ def main():
 
     try:
         communicate_client = CommunicateClient(MONITOR_IP, COMMUNICATION_PORT)
+        print(Fore.GREEN + "[Info] Connected to monitoring script" + Style.RESET_ALL)
     except ConnectionRefusedError:
+        communicate_client = None
         print(
-            Fore.RED
-            + "[Error] The monitoring script is not online on the secondary machine"
+            Fore.YELLOW
+            + "[Warning] Monitoring script not online — running without labelling"
             + Style.RESET_ALL
         )
-        exit(1)
 
     attack_deck = []
 
@@ -66,12 +67,14 @@ def main():
             print(Fore.RED + Style.BRIGHT + "Attack started" + Style.RESET_ALL)
 
             # this will communicate to the monitoring machine , if an attack is ongoing or not to be able to label the data.
-            communicate_client.signal_start(attack_type=attack_func.__name__)
+            if communicate_client:
+                communicate_client.signal_start(attack_type=attack_func.__name__)
 
             attack_func()
 
             print(Fore.GREEN + Style.BRIGHT + "Attack finished" + Style.RESET_ALL)
-            communicate_client.signal_stop()
+            if communicate_client:
+                communicate_client.signal_stop()
 
             print("=" * 60)
 
