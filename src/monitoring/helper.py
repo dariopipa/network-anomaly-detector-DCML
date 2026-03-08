@@ -70,13 +70,21 @@ def cli_script() -> None:
 
 def write_to_csv(filename: str, data: dict):
     file_exists = os.path.isfile(filename)
-    with open(filename, "a", newline="") as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=data.keys())
+    try:
+        with open(filename, "a", newline="") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=data.keys())
 
-        if not file_exists:
-            writer.writeheader()
+            if not file_exists:
+                writer.writeheader()
 
-        writer.writerow(data)
+            writer.writerow(data)
+    except Exception as e:
+        print(
+            Fore.RED
+            + "Error writing to CSV. Please update the dataset and process output file paths before running. "
+            "These can be changed in src/monitoring/main.py." + Style.RESET_ALL
+        )
+        exit(1)
 
 
 def collect_monitored_data(
