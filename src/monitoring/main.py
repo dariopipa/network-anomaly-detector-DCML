@@ -3,7 +3,6 @@ from pathlib import Path
 import logging
 import time
 
-import psutil
 from . import helper
 from . import monitor_server_reciever
 

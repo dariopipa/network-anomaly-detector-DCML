@@ -78,7 +78,7 @@ def write_to_csv(filename: str, data: dict):
                 writer.writeheader()
 
             writer.writerow(data)
-    except Exception as e:
+    except Exception:
         print(
             Fore.RED
             + "Error writing to CSV. Please update the dataset and process output file paths before running. "
