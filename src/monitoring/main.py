@@ -10,8 +10,6 @@ SRC_DIR = Path(__file__).parent.parent
 
 # TODO: UPDATE NAME AFTER CREATING THE DATASET TO NOT ACTUALLY APPEND INFO BY MISTAKE
 DATASET_PATH = SRC_DIR / "dataset.csv"
-RUNNING_PROC_PATH = SRC_DIR / "processes.csv"
-
 
 logging.basicConfig(
     level=logging.INFO,
