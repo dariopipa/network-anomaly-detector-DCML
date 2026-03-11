@@ -49,7 +49,11 @@ def aggregate_dataframe_into_seconds_interval(data, window_size):
     min_attack_seconds = math.ceil(0.4 * window_size)
     resampled_data["label"] = (attack_seconds >= min_attack_seconds).astype(int)
 
-    # When using resample, the function creates {seconds_to_aggregate} windows from the first timestamp to the last, even if no data was collected during some of those intervals. We then drop the windows that contain only null values.
-    resampled_data = resampled_data.dropna()
+    # Drop windows where ALL mean columns are NaN - these are empty windows that get created by running the resample, and they do not contain any information.
+    mean_cols = [c for c in resampled_data.columns if c.endswith("_mean")]
+    resampled_data = resampled_data.dropna(subset=mean_cols, how="all")
+
+    # Fill any remaining NaNs with 0 - these are windows where only 1 data point was recorded, which makes the std NaN since you need at least 2 points to calculate it.
+    resampled_data = resampled_data.fillna(0)
 
     return resampled_data

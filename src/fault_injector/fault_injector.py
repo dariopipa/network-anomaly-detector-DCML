@@ -14,25 +14,38 @@ class FaultInjector:
         self.host = host
         self.port = port
 
-    # TCP Flood
+    # TCP Flood,hold connections open 
     def tcp_connection_flood(self) -> None:
-        duration = random.randint(30, 90)  # 30-90 seconds
+        duration = random.randint(60, 120)
         start_time = time.time()
-        connections = 0
+        held_sockets = []
 
-        while time.time() - start_time < duration:
-            try:
-                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        def flood_worker():
+            while time.time() - start_time < duration:
+                try:
+                    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                     sock.settimeout(2)
                     sock.connect((self.host, self.port))
-                    time.sleep(random.uniform(0.01, 0.05))
-                    connections += 1
+                    held_sockets.append(sock)
+                    time.sleep(0.001)
+                except Exception:
+                    time.sleep(0.1)
+
+        threads = [threading.Thread(target=flood_worker) for _ in range(20)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+
+        for sock in held_sockets:
+            try:
+                sock.close()
             except Exception:
-                time.sleep(0.1)
+                pass
 
     # Bandwidth Exhaustion
     def tcp_bandwidth_exhaustion(self) -> None:
-        duration = random.randint(30, 90)
+        duration = random.randint(60, 120)
         start_time = time.time()
         data = random.randbytes(10485760)  # 10MB
 
@@ -51,39 +64,58 @@ class FaultInjector:
         for t in threads:
             t.join()
 
-    # UDP Flood
+    # UDP Flood — multi-threaded for higher throughput
     def udp_flood(self):
-        duration = random.randint(30, 90)
+        duration = random.randint(60, 120)
         data = random.randbytes(65507)
         start_time = time.time()
 
-        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
-            while time.time() - start_time < duration:
-                try:
-                    sock.sendto(data, (self.host, self.port))
-                except Exception:
-                    time.sleep(0.1)
+        def flood_worker():
+            with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                while time.time() - start_time < duration:
+                    try:
+                        sock.sendto(data, (self.host, self.port))
+                    except Exception:
+                        time.sleep(0.1)
+
+        threads = [threading.Thread(target=flood_worker) for _ in range(15)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
 
     # Port Scanning Attack
     def port_scan_simulation(self):
-        duration = random.randint(30, 90)
+        duration = random.randint(60, 120)
         start_time = time.time()
-        scan_ports = random.sample(range(1, 65536), 2000)
+        scan_ports = random.sample(range(1, 65536), 10000)
+        port_index = 0
+        lock = threading.Lock()
 
-        for port in scan_ports:
-            if time.time() - start_time >= duration:
-                break
+        def scan_worker():
+            nonlocal port_index
+            while time.time() - start_time < duration:
+                with lock:
+                    if port_index >= len(scan_ports):
+                        break
+                    port = scan_ports[port_index]
+                    port_index += 1
+                try:
+                    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+                        sock.settimeout(0.01)
+                        sock.connect((self.host, port))
+                except Exception:
+                    pass
 
-            try:
-                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-                    sock.settimeout(0.05)
-                    sock.connect((self.host, port))
-            except Exception:
-                pass
+        threads = [threading.Thread(target=scan_worker) for _ in range(10)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
 
     # Large file download
     def bulk_download(self):
-        duration = random.randint(30, 90)
+        duration = random.randint(60, 120)
         data = random.randbytes(10485760)
         start_time = time.time()
 
