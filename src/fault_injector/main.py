@@ -49,7 +49,7 @@ def main():
 
             attack_func = attack_deck.pop(0)
 
-            wait_before_attack = random.randint(60, 120)
+            wait_before_attack = random.randint(180, 300)
 
             print(Fore.CYAN + "Injection started" + Style.RESET_ALL)
             print(

@@ -14,7 +14,7 @@ class FaultInjector:
         self.host = host
         self.port = port
 
-    # TCP Flood,hold connections open 
+    # TCP Flood,hold connections open
     def tcp_connection_flood(self) -> None:
         duration = random.randint(60, 120)
         start_time = time.time()
