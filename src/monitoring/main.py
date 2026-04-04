@@ -8,7 +8,6 @@ from . import monitor_server_reciever
 
 SRC_DIR = Path(__file__).parent.parent
 
-# TODO: UPDATE NAME AFTER CREATING THE DATASET TO NOT ACTUALLY APPEND INFO BY MISTAKE
 DATASET_PATH = SRC_DIR / "dataset.csv"
 
 logging.basicConfig(

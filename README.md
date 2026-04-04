@@ -95,3 +95,9 @@ To change IPs and ports.
 - Set `INJECTOR_IP` to the attacker PC IP
 - Run **Terminals 1–3** on the monitor PC
 - Run **Terminal 4** on the injector PC
+
+## Notes
+
+The dataset (`dataset.csv`) and the trained model (`.pkl`) are included in the repository as the final versions used in this project.
+
+If you want to run new experiments, update the file paths in `src/monitoring/main.py` before collecting new data, and update the model filename in `live.ipynb` after retraining.
