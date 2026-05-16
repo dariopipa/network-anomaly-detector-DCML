@@ -1,6 +1,6 @@
 # ========== MACHINES ==========
-MONITOR_IP = "10.250.91.7"
-INJECTOR_IP = "10.250.91.5"
+MONITOR_IP = "10.240.232.7"
+INJECTOR_IP = "10.240.232.5" 
 
 # ========== PORTS ==========
 TCP_PORT = 1908
